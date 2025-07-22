@@ -11,35 +11,37 @@ class Layout:
             restricted = []
             for elem in self.fixed_elements:
                 if elem['tipo'] in ['parede', 'banheiro', 'restricao']:
+                    buffer = 3
                     restricted.append({
-                        'x': elem['x'],
-                        'y': elem['y'],
-                        'w': elem['w'],
-                        'h': elem['h']
+                        "x": max(0, elem["x"] - buffer),
+                        "y": max(0, elem["y"] - buffer),
+                        "w": elem["w"] + buffer * 2,
+                        "h": elem["h"] + buffer * 2
                     })
             return restricted
         
-    def is_valid_position(self, table, other_tables):
-            """Verifica se a posição da mesa é válida"""
-            # Verifica colisão com elementos fixos
-            for area in self.restricted_areas:
-                if self.check_collision(table, area):
-                    return False
-            
-            # Verifica colisão com outras mesas
+    def is_valid_position(self, table, other_tables, allow_overlap=False):
+        """Verifica se a posição da mesa é válida"""
+        # Verifica colisão com elementos fixos (sempre deve ser evitada)
+        for area in self.restricted_areas:
+            if self.check_collision(table, area):
+                return False
+
+        # Verifica colisão com outras mesas, a menos que sobreposição esteja permitida
+        if not allow_overlap:
             for other in other_tables:
                 if self.check_collision(table, other, spacing=self.spacing):
                     return False
-            
-            # Verifica limites da planta com espaço para cadeiras
-            chair_space = 1.5
-            if (table['x'] < 0 or 
-                table['y'] < chair_space or 
-                table['x'] + table['w'] > self.planta['largura'] or
-                table['y'] + table['h'] > self.planta['altura'] - chair_space):
-                return False
-            
-            return True
+
+        # Verifica limites da planta com espaço para cadeiras
+        chair_space = 1.5
+        if (table['x'] < 0 or 
+            table['y'] < chair_space or 
+            table['x'] + table['w'] > self.planta['largura'] or
+            table['y'] + table['h'] > self.planta['altura'] - chair_space):
+            return False
+
+        return True
         
     def check_collision(self, rect1, rect2, spacing=0):
             """Verifica colisão entre dois retângulos"""

@@ -19,7 +19,7 @@ class OfficeLayoutVisualizer:
 
         self.max_generations = 1000  # Critério 1: Número máximo de gerações
         self.target_fitness = 500    # Critério 2: Fitness desejado
-        self.stagnation_limit = 500  # Critério 3: Gerações sem melhoria
+        self.stagnation_limit = 500  # Critério 3: Gerações
         
         # Parâmetros de visualização
         self.scale = DEFAULT_SCALE  # Escala para visualização (pixels por unidade)
@@ -98,6 +98,10 @@ class OfficeLayoutVisualizer:
             
             # Desenha as mesas da melhor solução atual
             if self.best_individual:
+                # if len(self.best_individual) > 1:
+                #     self.best_individual[1]['x'] = self.best_individual[0]['x']
+                #     self.best_individual[1]['y'] = self.best_individual[0]['y']
+
                 for table in self.best_individual:
                     chair_space = CHAIR_SPACE
                     valid_position = (chair_space <= table['y'] and 
@@ -105,7 +109,8 @@ class OfficeLayoutVisualizer:
                                     0 <= table['x'] <= self.planta['largura'] - table['w'])
                     
                     color = self.colors['table_valid'] if valid_position else self.colors['table_invalid']
-                    
+                    # color = self.colors['table_invalid']  # Sempre vermelho para simular erro visível
+
                     pygame.draw.rect(
                         self.screen, color,
                         (table['x'] * self.scale, table['y'] * self.scale,
