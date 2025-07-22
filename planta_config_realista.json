@@ -1,0 +1,135 @@
+{
+  "planta": {
+    "largura": 60,
+    "altura": 40,
+    "elementos": [
+      {
+        "id": "parede_esquerda",
+        "tipo": "parede",
+        "w": 1,
+        "h": 40,
+        "x": 0,
+        "y": 0,
+        "fixo": true
+      },
+      {
+        "id": "parede_direita",
+        "tipo": "parede",
+        "w": 1,
+        "h": 40,
+        "x": 59,
+        "y": 0,
+        "fixo": true
+      },
+      {
+        "id": "parede_superior",
+        "tipo": "parede",
+        "w": 60,
+        "h": 1,
+        "x": 0,
+        "y": 0,
+        "fixo": true
+      },
+      {
+        "id": "parede_inferior",
+        "tipo": "parede",
+        "w": 60,
+        "h": 1,
+        "x": 0,
+        "y": 39,
+        "fixo": true
+      },
+      {
+        "id": "banheiro",
+        "tipo": "banheiro",
+        "w": 6,
+        "h": 10,
+        "x": 0,
+        "y": 0,
+        "fixo": true
+      },
+      {
+        "id": "area_porta_banheiro",
+        "tipo": "restricao",
+        "w": 6,
+        "h": 2,
+        "x": 0,
+        "y": 10,
+        "fixo": true
+      },
+      {
+        "id": "mesa_1",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_2",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_3",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_4",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_5",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_6",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_7",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_8",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_9",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_10",
+        "tipo": "mesa",
+        "w": 10,
+        "h": 3
+      },
+      {
+        "id": "mesa_11",
+        "tipo": "mesa",
+        "w": 20,
+        "h": 3
+      },
+      {
+        "id": "mesa_12",
+        "tipo": "mesa",
+        "w": 20,
+        "h": 3
+      }
+    ]
+  },
+  "conectividades": []
+}
