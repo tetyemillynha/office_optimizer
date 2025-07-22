@@ -1,8 +1,6 @@
 import pygame
 import random
 import json
-import sys
-from pygame import gfxdraw
 
 # Inicialização do Pygame
 pygame.init()
