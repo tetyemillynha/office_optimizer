@@ -1,0 +1,128 @@
+{
+  "planta": {
+    "largura": 20,
+    "altura": 20,
+    "elementos": [
+      {
+        "id": "recepcao",
+        "tipo": "recepcao",
+        "w": 4,
+        "h": 4
+      },
+      {
+        "id": "sala_reuniao_1",
+        "tipo": "sala_reuniao",
+        "w": 4,
+        "h": 4
+      },
+      {
+        "id": "sala_reuniao_2",
+        "tipo": "sala_reuniao",
+        "w": 4,
+        "h": 4
+      },
+      {
+        "id": "banheiro_1",
+        "tipo": "banheiro",
+        "w": 3,
+        "h": 3
+      },
+      {
+        "id": "banheiro_2",
+        "tipo": "banheiro",
+        "w": 3,
+        "h": 3
+      },
+      {
+        "id": "mesa_1",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      },
+      {
+        "id": "mesa_2",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      },
+      {
+        "id": "mesa_3",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      },
+      {
+        "id": "mesa_4",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      },
+      {
+        "id": "mesa_5",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      },
+      {
+        "id": "mesa_6",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      },
+      {
+        "id": "mesa_7",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      },
+      {
+        "id": "mesa_8",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      },
+      {
+        "id": "mesa_9",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      },
+      {
+        "id": "mesa_10",
+        "tipo": "mesa",
+        "w": 2,
+        "h": 2
+      }
+    ]
+  },
+  "conectividades": [
+    {
+      "de": "mesa_1",
+      "para": "sala_reuniao_1"
+    },
+    {
+      "de": "mesa_2",
+      "para": "sala_reuniao_1"
+    },
+    {
+      "de": "mesa_3",
+      "para": "sala_reuniao_2"
+    },
+    {
+      "de": "recepcao",
+      "para": "banheiro_1"
+    },
+    {
+      "de": "recepcao",
+      "para": "banheiro_2"
+    },
+    {
+      "de": "mesa_1",
+      "para": "banheiro_1"
+    },
+    {
+      "de": "mesa_2",
+      "para": "banheiro_2"
+    }
+  ]
+}
