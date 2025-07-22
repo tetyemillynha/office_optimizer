@@ -301,7 +301,7 @@ class OfficeLayoutVisualizer:
         elif self.best_fitness >= self.target_fitness:
             stop_reason = f"Fitness alvo {self.target_fitness} alcançado"
         elif self.generation - self.last_improvement > self.stagnation_limit:
-            stop_reason = f"Estagnou por {self.stagnation_limit} gerações"
+            stop_reason = f"Finalizou com {self.stagnation_limit} gerações"
             
         return stop_reason
     
