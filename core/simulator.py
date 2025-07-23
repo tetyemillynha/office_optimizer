@@ -34,6 +34,7 @@ class Simulator:
                     if stop_reason:
                         print(f"PARANDO: {stop_reason}")
                         self._handle_stop_condition(stop_reason)
+                        self.genetic.save_fitness_plot()
                         break
 
 

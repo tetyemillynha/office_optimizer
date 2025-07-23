@@ -59,7 +59,7 @@ class OfficeLayoutVisualizer:
             spacing=self.spacing,
             mutation_rate=self.mutation_rate,
             layout=self.layout,
-            selection_method="tournament"
+            selection_method="roulette"
         )
         
         # Estado da simulação

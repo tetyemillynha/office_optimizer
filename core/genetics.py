@@ -1,5 +1,6 @@
 import random
-
+import matplotlib.pyplot as plt
+import os
 class GeneticAlgorithm:
     def __init__(self, planta, movable_tables, restricted_areas, spacing, mutation_rate,
                  layout, population_size=30, max_generations=1000, target_fitness=500, stagnation_limit=500,
@@ -248,5 +249,26 @@ class GeneticAlgorithm:
                 stop_reason = f"Fitness alvo {self.target_fitness} alcançado"
             elif self.generation - self.last_improvement > self.stagnation_limit:
                 stop_reason = f"Finalizou com {self.stagnation_limit} gerações"
+            
+            self.fitness_history.append(current_best)
                 
             return stop_reason
+    
+    def save_fitness_plot(self):
+        plt.figure(figsize=(10, 5))
+        plt.plot(self.fitness_history, label='Melhor Fitness')
+        plt.title(f'Evolução do Fitness - Método: {self.selection_method}')
+        plt.xlabel('Gerações')
+        plt.ylabel('Fitness')
+        plt.legend()
+        plt.grid(True)
+
+
+        filename = f"docs/fitness_plot_{self.selection_method}.png"
+
+        # Cria o diretório se não existir
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+        # Salva o gráfico
+        plt.savefig(filename)
+        plt.close()
