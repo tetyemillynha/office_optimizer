@@ -58,7 +58,8 @@ class OfficeLayoutVisualizer:
             restricted_areas=self.restricted_areas,
             spacing=self.spacing,
             mutation_rate=self.mutation_rate,
-            layout=self.layout
+            layout=self.layout,
+            selection_method="tournament"
         )
         
         # Estado da simulação

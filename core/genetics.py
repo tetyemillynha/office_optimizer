@@ -2,7 +2,8 @@ import random
 
 class GeneticAlgorithm:
     def __init__(self, planta, movable_tables, restricted_areas, spacing, mutation_rate,
-                 layout, population_size=30, max_generations=1000, target_fitness=500, stagnation_limit=500):
+                 layout, population_size=30, max_generations=1000, target_fitness=500, stagnation_limit=500,
+                 selection_method="rank"):
         self.planta = planta
         self.movable_tables = movable_tables
         self.restricted_areas = restricted_areas
@@ -13,11 +14,12 @@ class GeneticAlgorithm:
         self.target_fitness = target_fitness
         self.stagnation_limit = stagnation_limit
         self.layout = layout
-
+        self.selection_method = selection_method
         self.best_fitness = -float("inf")
         self.best_individual = None
         self.generation = 0
         self.last_improvement = 0
+        self.fitness_history = []
 
         self.population = [self.create_individual() for _ in range(self.population_size)]
 
@@ -129,15 +131,41 @@ class GeneticAlgorithm:
                 score += 50
             
             return score
+    
+    #outros metodos de seleção para testes
+    def selection_tournament(self, population, fitness_scores, k=5):
+        selected = []
+        for _ in range(len(population)):
+            candidates = random.sample(list(zip(population, fitness_scores)), k)
+            winner = max(candidates, key=lambda x: x[1])[0]
+            selected.append(winner)
+        return selected
+
+    def selection_roulette(self, population, fitness_scores):
+        total_fitness = sum(fitness_scores)
+        if total_fitness == 0:
+            fitness_scores = [1 for _ in fitness_scores]
+            total_fitness = sum(fitness_scores)
+        probs = [f / total_fitness for f in fitness_scores]
+        return random.choices(population, weights=probs, k=len(population))
+
+    def selection_rank(self, population, fitness_scores):
+        ranked = sorted(zip(population, fitness_scores), key=lambda x: x[1])
+        ranks = list(range(1, len(population)+1))
+        probs = [r / sum(ranks) for r in ranks]
+        return random.choices([ind for ind, _ in ranked], weights=probs, k=len(population))
+
 
     def selection(self, population, fitness_scores):
-            """Seleção por torneio"""
-            selected = []
-            for _ in range(len(population)):
-                candidates = random.sample(list(zip(population, fitness_scores)), 5)
-                winner = max(candidates, key=lambda x: x[1])[0]
-                selected.append(winner)
-            return selected
+        if self.selection_method == "tournament":
+            return self.selection_tournament(population, fitness_scores)
+        elif self.selection_method == "roulette":
+            return self.selection_roulette(population, fitness_scores)
+        elif self.selection_method == "rank":
+            return self.selection_rank(population, fitness_scores)
+        else:
+            raise ValueError(f"Método de seleção desconhecido: {self.selection_method}")
+
         
     def crossover(self, parent1, parent2):
             """Crossover de ponto único"""
