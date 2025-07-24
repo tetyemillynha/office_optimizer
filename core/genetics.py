@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os
 class GeneticAlgorithm:
     def __init__(self, planta, movable_tables, restricted_areas, spacing, mutation_rate,
-                 layout, population_size=30, max_generations=1000, target_fitness=500, stagnation_limit=500,
+                 layout, population_size=30, max_generations=500, target_fitness=500, stagnation_limit=100,
                  selection_method="rank"):
         self.planta = planta
         self.movable_tables = movable_tables

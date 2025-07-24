@@ -17,9 +17,10 @@ class OfficeLayoutVisualizer:
         self.fixed_elements = [elem for elem in self.planta['elementos'] if elem.get('fixo', False)]
         self.movable_tables = [elem for elem in self.planta['elementos'] if elem['tipo'] == 'mesa']
 
-        self.max_generations = 1000  # Critério 1: Número máximo de gerações
-        self.target_fitness = 500    # Critério 2: Fitness desejado
-        self.stagnation_limit = 500  # Critério 3: Gerações
+        self.max_generations = 300  # Critério 1: Número máximo de gerações
+        self.target_fitness = 450    # Critério 2: Fitness desejado
+        self.stagnation_limit = 100  # Critério 3: Gerações
+        self.selection_method = "tournament"
         
         # Parâmetros de visualização
         self.scale = DEFAULT_SCALE  # Escala para visualização (pixels por unidade)
@@ -30,7 +31,7 @@ class OfficeLayoutVisualizer:
         self.colors = COLORS
         
         # Parâmetros do algoritmo genético
-        self.population_size = 30
+        self.population_size = 40
         self.mutation_rate = 0.1
         self.spacing = 2
 
@@ -59,7 +60,11 @@ class OfficeLayoutVisualizer:
             spacing=self.spacing,
             mutation_rate=self.mutation_rate,
             layout=self.layout,
-            selection_method="roulette"
+            selection_method=self.selection_method,
+            population_size=self.population_size,
+            max_generations=self.max_generations,
+            target_fitness=self.target_fitness,
+            stagnation_limit=self.stagnation_limit
         )
         
         # Estado da simulação
