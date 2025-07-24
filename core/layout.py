@@ -11,7 +11,7 @@ class Layout:
             restricted = []
             for elem in self.fixed_elements:
                 if elem['tipo'] in ['parede', 'banheiro', 'restricao']:
-                    buffer = 3
+                    buffer = 3 #para aumentar a area de restrição do banheiro
                     restricted.append({
                         "x": max(0, elem["x"] - buffer),
                         "y": max(0, elem["y"] - buffer),
