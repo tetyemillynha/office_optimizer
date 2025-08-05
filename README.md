@@ -119,4 +119,4 @@ python main.py
 ```
 
 ## ⚙️ Confira o vídeo no youtube
-![Algoritmos Genéticos aplicados à otimização de layout de escritório](https://www.youtube.com/watch?v=sUIuIr8SbME)
+[Algoritmos Genéticos aplicados à otimização de layout de escritório](https://www.youtube.com/watch?v=sUIuIr8SbME)
