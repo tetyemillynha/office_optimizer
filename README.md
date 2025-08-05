@@ -1,62 +1,97 @@
 
 # Tech Challenge – Otimização de Layout de Escritório com Algoritmo Genético
 
-## 📌 Descrição do Problema
+## 📌 Descrição
 
-Este projeto tem como objetivo aplicar um **Algoritmo Genético (GA)** para resolver o problema de **layout de um escritório**, otimizando a posição de mesas dentro de uma planta com restrições físicas, como paredes e banheiro, e regras de espaçamento.
-
-A solução visa evitar sobreposições entre elementos móveis, respeitar áreas fixas e distribuir as mesas de forma eficiente dentro do ambiente de trabalho.
-
-## 🧠 Problema
-
-Dado um escritório com:
-- Tamanho fixo (60x40 unidades);
-- Elementos fixos (paredes, banheiro, porta do banheiro);
-- Mesas móveis com dimensões variadas (10x3 ou 20x3);
-- Restrições como:
-  - Nenhuma sobreposição entre mesas;
-  - Distância mínima entre os elementos;
-  - Proibição de invadir áreas fixas;
+Este projeto utiliza **algoritmos genéticos** para encontrar o layout ideal de mesas em um escritório, considerando restrições físicas e objetivos de otimização como distância entre mesas, aproveitamento de espaço e capacidade de cadeiras. A solução foi implementada em **Python**, com visualização do progresso por meio de gráficos usando **matplotlib**.
 
 ## 🎯 Objetivo
 
-Organizar automaticamente as mesas móveis dentro de um escritório de 60x40 unidades:
-- **Evitar sobreposição** com paredes, banheiro ou entre mesas;
-- **Manter espaço para cadeiras** ao redor das mesas;
-- **Maximizar o aproveitamento do espaço** e manter distância adequada entre mesas;
-- **Gerar uma solução otimizada** de forma automática, simulando gerações de evolução com um algoritmo genético.
+Organizar automaticamente um conjunto de mesas em uma planta retangular, maximizando:
+- A quantidade de cadeiras no ambiente,
+- A distância mínima e média entre mesas (evitando aglomerações),
+- A centralização das mesas,
+- A densidade e o aproveitamento do espaço.
 
-## 🧬 Algoritmo Genético
+E ao mesmo tempo respeitar:
+- Restrições físicas como áreas proibidas (banheiros, paredes),
+- Espaçamento mínimo entre mesas para circulação de cadeiras,
+- Limites da planta (largura x altura).
 
-O algoritmo segue os seguintes passos:
+## ⚙️ Como o Algoritmo Funciona
 
-1. **Inicialização:** gera uma população de layouts aleatórios;
-2. **Avaliação:** cada layout recebe um valor de fitness com base em colisões, densidade, centralidade e capacidade de cadeiras;
-3. **Seleção:** usa torneio para selecionar os melhores indivíduos;
-4. **Crossover:** combina partes de dois layouts para gerar novos;
-5. **Mutação:** altera mesas de forma controlada (posição e rotação);
-6. **Parada:** ocorre após alcançar fitness ideal, número máximo de gerações ou estagnação.
+### 1. **Inicialização**
+- Define-se uma população inicial com indivíduos (layouts aleatórios).
+- Cada indivíduo é um conjunto de mesas com posições (x, y) e dimensões (w, h).
 
-## 🏗️ Estrutura do Código
+### 2. **Avaliação (Fitness)**
+Função `fitness()` avalia a qualidade de cada layout com base em:
+- Penalidades para colisões, posicionamento inválido ou sem espaço para cadeiras;
+- Pontuações para capacidade de cadeiras, centralidade, distâncias, densidade de uso e número total de mesas.
 
-- `OfficeLayoutVisualizer`: classe principal que executa o algoritmo e visualiza o resultado;
-- `create_individual`: gera um novo layout aleatório;
-- `is_valid_position`: valida se uma mesa pode ser posicionada em determinada área;
-- `fitness`: calcula a pontuação do layout;
-- `selection`, `crossover`, `mutate`: operadores genéticos;
-- `draw`: exibe o layout na tela com cores diferentes para áreas válidas/colididas;
-- `run`: executa o loop principal, processando eventos e gerando novas gerações.
+### 3. **Seleção**
+Três métodos de seleção são suportados:
+- **Roleta (roulette)**: seleciona indivíduos com probabilidade proporcional ao fitness.
+- **Torneio (tournament)**: escolhe o melhor entre grupos aleatórios.
+- **Rankeamento (rank)**: seleciona com base na posição do indivíduo em um ranking.
 
-## 📐 Restrições Consideradas
+### 4. **Crossover**
+A função `crossover()` realiza cruzamento de ponto único entre dois pais, gerando dois novos filhos com combinações dos layouts.
 
-- Colisão com:
-  - Paredes,
-  - Banheiro,
-  - Outras mesas.
-- Espaço de cadeiras: 1.5 unidades acima/abaixo da mesa.
-- Penalidades no fitness para colisões e má distribuição.
+### 5. **Mutação**
+A função `mutate()` altera levemente alguns indivíduos:
+- Com 70% de chance muda a posição da mesa (respeitando restrições);
+- Com 30% de chance rotaciona a mesa (trocando largura/altura).
+
+### 6. **Nova Geração**
+A função `next_generation()` monta a próxima população aplicando:
+- Avaliação de fitness,
+- Seleção,
+- Cruzamento,
+- Mutação.
+
+Critérios de parada:
+- Número máximo de gerações (`max_generations`),
+- Fitness desejado atingido (`target_fitness`),
+- Estagnação sem melhoria (`stagnation_limit`).
+
+### 7. **Visualização**
+Ao final, o algoritmo gera um gráfico com a evolução do **melhor fitness por geração**, e salva a imagem como `fitness_plot_<metodo>.png`.
+
+## 📊 Resultados
+
+Os testes compararam os três métodos de seleção. O método **tournament** e **rank** apresentaram melhor desempenho, com evolução mais consistente do fitness ao longo das gerações. Já o método **roulette** mostrou flutuações maiores e menor estabilidade.
+
+## 🖼️ Exemplo de Gráfico Gerado
+
+![Exemplo de Gráfico](./docs/fitness_plot_tournament.png)
+
+## 📁 Estrutura
+
+```
+OFFICE_OPTIMIZER/
+├── config/
+│ └── config.json # Planta do escritório simulada (dimensões, mesas, áreas restritas)
+├── core/
+│ ├── genetics.py # Algoritmo genético com lógica de seleção, cruzamento e mutação
+│ ├── layout.py # Funções para cálculo de distância e verificação de colisões
+│ ├── simulator.py # Classe principal que executa a simulação evolutiva
+│ └── utils.py # Funções auxiliares como geração de população inicial
+├── docs/
+│ ├── fitness_plot_rank.png # Gráfico da evolução do fitness com seleção por ranking
+│ ├── fitness_plot_roulette.png # Gráfico da evolução do fitness com seleção por roleta
+│ ├── fitness_plot_tournament.png # Gráfico da evolução do fitness com seleção por torneio
+│ └── office_plan.png # Planta visual do escritório usada como background no Pygame
+├── ui/
+│ └── visualizer.py # Visualização gráfica com Pygame (desenha as mesas, áreas e interação)
+├── main.py # Ponto de entrada da aplicação (inicializa e roda o simulador)
+├── requirements.txt # Dependências do projeto
+└── README.md # Documentação do projeto
+```
 
 ## 🎮 Controles
+
+Para melhor visualização de como o algoritmo funciona, foi adicionada a biblioteca Pygame. Para interagir, use os controles abaixo:
 
 - `Espaço`: Pausar/continuar execução
 - `R`: Reiniciar simulação
